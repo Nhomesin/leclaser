@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   LEC // PRECISION — base layer
+   ============================================================ */
+:root {
+  --bg: #ffffff;
+  --line: rgba(10, 10, 10, 0.10);
+  --laser: #f58634;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* sticky header offset for in-page anchors */
+  scroll-padding-top: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  background-color: var(--bg);
+  color: #0a0a0a;
+  font-feature-settings: "ss01", "cv01", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(245, 134, 52, 0.26);
+  color: #0a0a0a;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #f1efea; }
+::-webkit-scrollbar-thumb { background: #d6d2ca; border-radius: 99px; border: 3px solid #f1efea; }
+::-webkit-scrollbar-thumb:hover { background: #c2bdb2; }
+
+/* ============================================================
+   Reusable component classes
+   ============================================================ */
+@layer components {
+  .container-lec {
+    @apply mx-auto w-full max-w-container px-5 sm:px-7 lg:px-8;
+  }
+
+  /* Acrylic-clean panel — white card with soft shadow */
+  .panel {
+    @apply relative rounded-2xl border border-line bg-panel-sheen shadow-panel;
+  }
+  .panel-solid {
+    @apply relative rounded-2xl border border-line shadow-panel;
+    background-color: #ffffff;
+  }
+
+  /* Technical mono label, like a part number */
+  .tech-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-faint;
+  }
+
+  /* Eyebrow with a laser tick */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.28em] text-laser;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-7 bg-laser/60;
+  }
+
+  /* Hot accent gradient text */
+  .text-laser-grad {
+    @apply bg-laser-grad bg-clip-text text-transparent;
+  }
+
+  /* Primary CTA */
+  .btn {
+    @apply relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ease-precise focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-laser focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+  /* Primary CTA — green ACTION color (off-brand from orange) so it pops. */
+  .btn-primary {
+    @apply btn bg-cta-grad text-white shadow-cta-soft hover:-translate-y-0.5 hover:shadow-cta;
+  }
+  /* Explicit CTA alias (same as primary) for clarity at call sites. */
+  .btn-cta {
+    @apply btn bg-cta-grad text-white shadow-cta-soft hover:-translate-y-0.5 hover:shadow-cta;
+  }
+  /* Brand-orange button, for the rare case we want the identity color on a button. */
+  .btn-brand {
+    @apply btn bg-laser-grad text-white shadow-glow-soft hover:-translate-y-0.5 hover:shadow-glow;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-black/[0.015] text-ink hover:border-black/20 hover:bg-black/[0.04];
+  }
+  .btn-dark {
+    @apply btn bg-ink text-white hover:-translate-y-0.5;
+  }
+
+  /* Hairline divider */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-line to-transparent;
+  }
+
+  /* Card with corner cut-marks */
+  .card {
+    @apply panel p-6 transition-all duration-300 ease-precise hover:-translate-y-0.5 hover:border-black/15;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-laser transition-all duration-300 ease-precise;
+  }
+  .link-underline:hover::after { @apply w-full; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Engineering grid backdrop — dark hairlines on white (blueprint) */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(10, 10, 10, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 10, 10, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-fine {
+    background-image:
+      linear-gradient(rgba(10, 10, 10, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 10, 10, 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-dots {
+    background-image: radial-gradient(rgba(10, 10, 10, 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Radial spotlight used behind heroes — warm orange wash */
+  .spotlight {
+    background: radial-gradient(60% 60% at 50% 0%, rgba(245, 134, 52, 0.16) 0%, rgba(245, 134, 52, 0) 70%);
+  }
+  .spotlight-tr {
+    background: radial-gradient(55% 55% at 85% 8%, rgba(245, 134, 52, 0.14) 0%, rgba(245, 134, 52, 0) 72%);
+  }
+
+  .mask-fade-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+}
+
+/* Top route-progress bar */
+#route-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 100;
+  background: linear-gradient(90deg, #ff7a40, #ff5a1f, #f23e07);
+  transform-origin: 0 50%;
+  box-shadow: 0 0 12px rgba(255, 90, 31, 0.7);
+}
