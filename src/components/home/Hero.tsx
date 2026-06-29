@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Phone, Sparkles, Check } from "lucide-react";
 import { SITE } from "@/lib/site";
-import { categoryHero } from "@/data/images";
+import { homeHero } from "@/data/images";
 
 const TRUST = ["Prvi u BiH s laserom za nemetale", "Od ideje do gotovog proizvoda", "Isporuka u 4 zemlje regije"];
 
@@ -115,7 +115,7 @@ function BlueprintVisual({
   compact?: boolean;
   className?: string;
 }) {
-  const heroImg = categoryHero("svjetlece-reklame-logotipi");
+  const heroImg = homeHero();
   return (
     <motion.div
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}

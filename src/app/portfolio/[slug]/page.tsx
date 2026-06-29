@@ -5,8 +5,9 @@ import { Check, ArrowUpRight } from "lucide-react";
 import { PORTFOLIO_CONTENT, getPortfolio } from "@/data/portfolio-content";
 import { PORTFOLIO } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
-import { SectionHeading, Pill } from "@/components/ui/primitives";
+import { SectionHeading, Pill, CornerTicks } from "@/components/ui/primitives";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { QuoteForm } from "@/components/QuoteForm";
@@ -14,7 +15,7 @@ import { Icon } from "@/components/Icon";
 import { JsonLd, faqSchema, serviceSchema } from "@/lib/jsonld";
 import { SITE } from "@/lib/site";
 import { Gallery } from "@/components/Gallery";
-import { categoryImages } from "@/data/images";
+import { categoryImages, categoryHero } from "@/data/images";
 
 export function generateStaticParams() {
   return PORTFOLIO_CONTENT.map((p) => ({ slug: p.slug }));
@@ -30,7 +31,8 @@ export default function PortfolioDetailPage({ params }: { params: { slug: string
   const p = getPortfolio(params.slug);
   if (!p) notFound();
   const related = PORTFOLIO.filter((x) => x.slug !== p.slug).slice(0, 3);
-  const photos = categoryImages(p.slug);
+  const hero = categoryHero(p.slug);
+  const photos = categoryImages(p.slug).slice(1); // hero shown separately
 
   return (
     <>
@@ -51,6 +53,20 @@ export default function PortfolioDetailPage({ params }: { params: { slug: string
         ]}
         badge={<Pill>{p.tagline}</Pill>}
       />
+
+      {/* Feature image */}
+      {hero && (
+        <section className="container-lec pt-10 lg:pt-14">
+          <div className="panel relative aspect-[16/9] overflow-hidden p-0 sm:aspect-[21/9]">
+            <Image src={hero} alt={p.name} fill priority sizes="(max-width: 1200px) 100vw, 1200px" className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" aria-hidden />
+            <CornerTicks />
+            <span className="absolute bottom-4 left-5 rounded-full bg-black/45 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-white backdrop-blur-sm">
+              {p.name}
+            </span>
+          </div>
+        </section>
+      )}
 
       {/* Description + use cases */}
       <section className="container-lec py-16 lg:py-20">
