@@ -8,6 +8,11 @@ deployed on Vercel. **Language: Bosnian/Serbian/Croatian (Latin, ijekavica).**
 > Deploy: import this repository into **Vercel** (auto-detected as Next.js). See **[HANDOFF.md](./HANDOFF.md)**
 > for the full owner setup — environment variables, custom domain (`leclaser.com`), and content editing.
 
+
+## Working in this repository
+
+Read [AGENTS.md](AGENTS.md) for the code map, verification commands and ownership boundaries. Codex starts there; Claude follows [CLAUDE.md](CLAUDE.md).
+
 ## What it is
 
 A high-conversion marketing site with an "engineered / laser" design system
